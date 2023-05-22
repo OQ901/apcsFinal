@@ -1,7 +1,7 @@
 // Final Sizing
-final int tX = 120; // tile width
-final int tY = 144; // tile height
-final int freqTiles = 6;
+final int TX = 120; // tile width
+final int TY = 144; // tile height
+final int FREQTILES = 6;
 
 // Game Variables
 int[] grid;
@@ -10,7 +10,7 @@ boolean gameRun;
 boolean isDead;
 
 // Shifting
-int shiftY;
+int shifTY;
 int shiftV;
 int baseV;
 int speedUp;
@@ -24,7 +24,7 @@ PImage background, logo;
 void setup() {
 
   size(480, 720); // 4 * 5 -- 120 pxl * 144 pxl tiles
-  grid = new int[freqTiles];
+  grid = new int[FREQTILES];
 
   background = loadImage("pastelBack.jpg");
   logo = loadImage("logo.jpg");
@@ -48,7 +48,7 @@ void newStart() {
   }
 
   // (Re)Set board shifts
-  shiftY = 0;
+  shifTY = 0;
   shiftV = baseV;
 
   // (Re)Set player status
@@ -109,27 +109,27 @@ void draw() {
     image(background, 0, 0, width, height);
 
     stroke(173, 202, 247); // light blue
-    line(tX, 0, tX, height);
-    line(tX * 2, 0, tX * 2, height);
-    line(tX * 3, 0, tX * 3, height);
+    line(TX, 0, TX, height);
+    line(TX * 2, 0, TX * 2, height);
+    line(TX * 3, 0, TX * 3, height);
 
     // fill(245, 182, 66); // orange
     fill(20, 45, 82); // navy blue
     for(int i = 0; i < grid.length; i++) {
-      rect(grid[i] * tX, height - (tY * (i + 1) - shiftY), tX, tY);
+      rect(grid[i] * TX, height - (TY * (i + 1) - shifTY), TX, TY);
     }
 
     // Alive
     if (gameRun & !isDead) {
 
-      shiftY += shiftV;
+      shifTY += shiftV;
       if (grid[0] != -1) {
         isDead = true;
       }
 
       // If shifted a whole tile (or more), restart shifting cycle
-      if (shiftY >= tY) {
-        shiftY = shiftY - tY;
+      if (shifTY >= TY) {
+        shifTY = shifTY - TY;
 
         for (int i = 0; i < grid.length - 1; i ++) {
           grid[i] = grid[i + 1];
