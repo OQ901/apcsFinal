@@ -1,6 +1,6 @@
 // Final Sizing
-final int wX = 480; // window max x
-final int wY = 720; // max y
+final int WX = 480; // window max x
+final int WY = 720; // max y
       int curLevel=0;
 String[] levels = new String[]{"song1","song2","etc"};
 String[] backgrounds = new String[]{"background1.jpg","background2.jpg","etc"};
