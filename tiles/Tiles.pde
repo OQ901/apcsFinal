@@ -13,7 +13,6 @@ boolean isDead;
 int shiftY;
 int shiftV;
 int baseV;
-int speedUp;
 
 
 // Images
@@ -31,7 +30,6 @@ void setup() {
 
   // Set custom shifting variables
   baseV = 5;
-  speedUp = 1;
 
   newStart();
 
