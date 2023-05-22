@@ -10,7 +10,7 @@ boolean gameRun;
 boolean isDead;
 
 // Shifting
-int shifTY;
+int shiftY;
 int shiftV;
 int baseV;
 int speedUp;
@@ -48,7 +48,7 @@ void newStart() {
   }
 
   // (Re)Set board shifts
-  shifTY = 0;
+  shiftY = 0;
   shiftV = baseV;
 
   // (Re)Set player status
@@ -116,20 +116,20 @@ void draw() {
     // fill(245, 182, 66); // orange
     fill(20, 45, 82); // navy blue
     for(int i = 0; i < grid.length; i++) {
-      rect(grid[i] * TX, height - (TY * (i + 1) - shifTY), TX, TY);
+      rect(grid[i] * TX, height - (TY * (i + 1) - shiftY), TX, TY);
     }
 
     // Alive
     if (gameRun & !isDead) {
 
-      shifTY += shiftV;
+      shiftY += shiftV;
       if (grid[0] != -1) {
         isDead = true;
       }
 
       // If shifted a whole tile (or more), restart shifting cycle
-      if (shifTY >= TY) {
-        shifTY = shifTY - TY;
+      if (shiftY >= TY) {
+        shiftY = shiftY - TY;
 
         for (int i = 0; i < grid.length - 1; i ++) {
           grid[i] = grid[i + 1];
