@@ -25,8 +25,8 @@ void setup() {
   size(480, 720); // 4 * 5 -- 120 pxl * 144 pxl tiles
   grid = new int[FREQTILES];
 
-  background = loadImage("pastelBack.jpg");
-  logo = loadImage("logo.jpg");
+  background = loadImage("img/bg/pastelBack.jpg");
+  logo = loadImage("img/logo.jpg");
 
   // Set custom shifting variables
   baseV = 5;
