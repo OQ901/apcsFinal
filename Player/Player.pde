@@ -12,8 +12,8 @@ void setup() {
 
   size(480, 720); // 4 * 5 -- 120 pxl * 144 pxl tiles
 
-  background = loadImage("pastelBack.jpg");
-  logo = loadImage("logo.jpg");
+  background = loadImage("img/bg/pastelBack.jpg");
+  logo = loadImage("img/logo.jpg");
 
   // Set custom shifting variables
   newStart();
@@ -82,33 +82,13 @@ void draw() {
     image(background, 0, 0, width, height);
 
     stroke(173, 202, 247); // light blue
-    line(TX, 0, TX, height);
-    line(TX * 2, 0, TX * 2, height);
-    line(TX * 3, 0, TX * 3, height);
-
-    // fill(245, 182, 66); // orange
-    fill(20, 45, 82); // navy blue
-    for(int i = 0; i < grid.length; i++) {
-      rect(grid[i] * TX, height - (TY * (i + 1) - shiftY), TX, TY);
-    }
+    line(Tile.TX, 0, Tile.TX, height);
+    line(Tile.TX * 2, 0, Tile.TX * 2, height);
+    line(Tile.TX * 3, 0, Tile.TX * 3, height);
 
     // Alive
     if (gameRun & !isDead) {
-
-      shiftY += shiftV;
-      if (grid[0] != -1) {
-        isDead = true;
-      }
-
-      // If shifted a whole tile (or more), restart shifting cycle
-      if (shiftY >= TY) {
-        shiftY = shiftY - TY;
-
-        for (int i = 0; i < grid.length - 1; i ++) {
-          grid[i] = grid[i + 1];
-        }
-        grid[grid.length - 1] = int(random(4));
-      }
+      isDead = scroll();
     }
   } 
 
