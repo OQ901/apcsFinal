@@ -21,7 +21,7 @@ void menuSetup(){
   text("Main Menu",50,50);
   for(int i=0;i<nMenus;i++){
     button_x1[i]=30;
-    button_y1[i]=50+y1;
+    button_y1[i]=100+y1;
     button_x2[i]=button_x1[i]+button_width;
     button_y2[i]=button_y1[i]+button_height;
     y1+=button_height+padding;
@@ -38,7 +38,7 @@ void mousePressed(){
     if(mouseX>button_x1[i]&& mouseX <button_x2[i]&&
     mouseY>button_y1[i]&&mouseY<button_y2[i]){
       cursPos=i;
-      System.out.println("level pressed: " + i);
+      System.out.println("level pressed: " + i);//temp
 }
   }
 }
