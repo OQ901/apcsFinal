@@ -33,11 +33,11 @@ void drawMenu(){
   displayMenus();
 }
 
-void mousePressed(){
+/*void mousePressed(){
   for(int i=0;i<nMenus;i++){
     if(mouseX>button_x1[i]&& mouseX <button_x2[i]&&
     mouseY>button_y1[i]&&mouseY<button_y2[i])cursPos=i;}
-}
+}*/ //needs to be integrated into all code
 
 void displayMenus(){
   menuSetup();
