@@ -3,6 +3,7 @@ public class Tile{
   final static int TY = 144; // tile height
   int xPos, yPos, row, column;
   int travelDist;
+  boolean isReset = false;
   
   public Tile(int ranColumn, int row){
   this.row = row;
@@ -23,9 +24,7 @@ public class Tile{
   }
   
   public boolean resetNeeded(){
-    if(travelDist > TY){
-      return true;
-    } else return false;
+    return travelDist >= TY;
   }
   
   public void resetShift(){

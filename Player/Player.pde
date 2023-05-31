@@ -2,10 +2,10 @@
 boolean started;
 boolean gameRun;
 boolean isDead;
-Grid grid = new Grid(5);
+Level level;
 
 // Images
-PImage background, logo;
+PImage logo;
 
 
 // One-time Setup
@@ -13,7 +13,6 @@ void setup() {
 
   size(480, 720); // 4 * 5 -- 120 pxl * 144 pxl tiles
 
-  background = loadImage("img/bg/pastelBack.jpg");
   logo = loadImage("img/logo.jpg");
 
   // Set custom shifting variables
@@ -28,26 +27,15 @@ void newStart() {
   // (Re)Set player status
   gameRun = false;
   isDead = false;
-
+  level = new Level(1); // STUB
+  
 } // end newStart()
 
 
 void keyPressed() {
 
-  if (key == '1') {
-    grid.checkMove(0);
-  }
-
-  if (key == '2') {
-    grid.checkMove(1);
-  }
-
-  if (key == '3') {
-    grid.checkMove(2);
-  }
-
-  if (key == '4') {
-    grid.checkMove(3);
+  if ("1234".contains(String.valueOf(key))) {
+    isDead = !level.checkMove(Character.getNumericValue(key) - 1);
   }
 
   // Start
@@ -77,22 +65,30 @@ void draw() {
     textSize(40);
     text("Piano Tiles X", 140, 460, 280, 60);
 
-  } else {
-
+  } else{
     
-    image(background, 0, 0, width, height);
-
-    stroke(173, 202, 247); // light blue
-    line(Tile.TX, 0, Tile.TX, height);
-    line(Tile.TX * 2, 0, Tile.TX * 2, height);
-    line(Tile.TX * 3, 0, Tile.TX * 3, height);
-    
-    grid.fillGrid();
+    level.levelSetup();
 
     // Alive
     if (gameRun & !isDead) {
-      isDead = grid.scroll();
+      isDead = level.scroll();
     }
-  } 
+  }
+  
+  if (isDead) {
+          // End Screen
+      fill(255, 255, 255);
+      rect(60, 180, 360, 45);
+      rect(60, 240, 360, 75);
+      fill(100);
+      textSize(30);
+      String s = "You suck!";
+      text(s, 180, 185, 350, 240);
+      s = "Score: TBD";
+      text(s, 90, 245, 350, 240);
+      s = "High Score: TBD";
+      text(s, 90, 275, 350, 240);
+
+    }
 
 } // end draw()

@@ -5,12 +5,10 @@ public class Grid{
     
   // Shifting
   int shiftV;
-  int baseV;
 
-  public Grid(int baseV){
+  public Grid(int shiftV){
     // (Re)Set board shifts
-    this.baseV = baseV;
-    shiftV = baseV;
+    this.shiftV = shiftV;
     
     // Fill grid with random tiles (0-3)
     grid = new Tile[FREQTILES];
@@ -35,31 +33,36 @@ public class Grid{
       isDead = true;
     }
   
-    for (int i = 0; i < grid.length - 1; i ++) {
+    for (int i = grid.length - 1; i > 0; i--){
       if (grid[i] != null){
         grid[i].moveTile(shiftV);
-        if(grid[i].resetNeeded()){
+        
+        if (grid[i].resetNeeded()){
           grid[i].resetShift();
           grid[i - 1] = grid[i];
+          grid[i] = null;
         }
       }
     }
-  
-    grid[grid.length - 1].row = int(random(4));
+    
+    if (grid[grid.length - 1] == null){
+      grid[grid.length - 1] = new Tile(int(random(4)), grid.length - 1);
+    }
     
     return isDead;
   }
   
-  public void checkMove(int pressed) {
-    for (int i = 0; i < grid.length; i++) {
-      if (grid[i] != null) {
-        if (grid[i].column == pressed) {
+  public boolean checkMove(int pressed){
+    boolean validMove = false;
+    for (int i = 0; i < grid.length; i++){
+      if (grid[i] != null){
+        if (grid[i].column == pressed){
           grid[i] = null;
-        } else {
-          isDead = true;
+          validMove = true;
         }
         break;
       }
     }
+    return validMove;
   }
 }
