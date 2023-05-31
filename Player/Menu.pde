@@ -5,23 +5,26 @@ int cursPos=0;
 int button_width=150;
 int button_height=50;
 
-int[] button_x1,button_y1;
+int[] button_x1,button_y1,button_x2,button_y2;
 
-void menuSettings(){
-  size(480,720);
-}
 
 void menuSetup(){
   button_x1 = new int[nMenus];
   button_y1 = new int[nMenus];
+  button_x2 = new int[nMenus];
+  button_y2 = new int[nMenus];
   
-  int x1=0;
+  int y1=0;
   int padding=20;
-  
+  textSize(50);
+  fill(0);
+  text("Main Menu",50,50);
   for(int i=0;i<nMenus;i++){
     button_x1[i]=30;
-    button_y1[i]=50+x1;
-    x1+=button_height+padding;
+    button_y1[i]=50+y1;
+    button_x2[i]=button_x1[i]+button_width;
+    button_y2[i]=button_y1[i]+button_height;
+    y1+=button_height+padding;
   }
 }
 
@@ -30,9 +33,11 @@ void drawMenu(){
   displayMenus();
 }
 
-//void mousePressed(){
-//  exit();//temp
-//}
+void mousePressed(){
+  for(int i=0;i<nMenus;i++){
+    if(mouseX>button_x1[i]&& mouseX <button_x2[i]&&
+    mouseY>button_y1[i]&&mouseY<button_y2[i])cursPos=i;}
+}
 
 void displayMenus(){
   menuSetup();
