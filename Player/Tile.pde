@@ -27,4 +27,10 @@ public class Tile{
       return true;
     } else return false;
   }
+  
+  public void resetShift(){
+    travelDist = 0;
+    row--;
+    yPos = height - (TY * (row + 1));
+  }
 }

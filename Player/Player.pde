@@ -2,6 +2,7 @@
 boolean started;
 boolean gameRun;
 boolean isDead;
+Grid grid = new Grid(5);
 
 // Images
 PImage background, logo;
@@ -34,19 +35,19 @@ void newStart() {
 void keyPressed() {
 
   if (key == '1') {
-    checkMove(0);
+    grid.checkMove(0);
   }
 
   if (key == '2') {
-    checkMove(1);
+    grid.checkMove(1);
   }
 
   if (key == '3') {
-    checkMove(2);
+    grid.checkMove(2);
   }
 
   if (key == '4') {
-    checkMove(3);
+    grid.checkMove(3);
   }
 
   // Start
@@ -85,26 +86,13 @@ void draw() {
     line(Tile.TX, 0, Tile.TX, height);
     line(Tile.TX * 2, 0, Tile.TX * 2, height);
     line(Tile.TX * 3, 0, Tile.TX * 3, height);
+    
+    grid.fillGrid();
 
     // Alive
     if (gameRun & !isDead) {
-      isDead = scroll();
+      isDead = grid.scroll();
     }
   } 
 
 } // end draw()
-
-
-void checkMove(int pressed) {
-
-  for (int i = 0; i < grid.length; i++) {
-    if (grid[i] != -1) {
-      if (grid[i] == pressed) {
-        grid[i] = -1;
-      } else {
-        isDead = true;
-      }
-      break;
-    }
-  }
-}

@@ -4,7 +4,6 @@ public class Grid{
   Tile[] grid;
     
   // Shifting
-  int shiftY;
   int shiftV;
   int baseV;
 
@@ -12,7 +11,6 @@ public class Grid{
     // (Re)Set board shifts
     this.baseV = baseV;
     shiftV = baseV;
-    shiftY = 0;
     
     // Fill grid with random tiles (0-3)
     grid = new Tile[FREQTILES];
@@ -25,29 +23,43 @@ public class Grid{
   
   public void fillGrid(){
     for(int i = 0; i < grid.length; i++) {
-      grid[i].drawTile();
+      if(grid[i] != null){
+        grid[i].drawTile();
+      }
     }
   }
   
   public boolean scroll(){
     boolean isDead = false;
-    shiftY += shiftV;
-    if (grid[0].row != -1) {
+    if (grid[0] != null) {
       isDead = true;
     }
-
-    // If shifted a whole tile (or more), restart shifting cycle
-    if (shiftY >= Tile.TY) {
-      shiftY = shiftY - Tile.TY;
-      
-      for (int i = 0; i < grid.length - 1; i ++) {
-        grid[i] = grid[i + 1];
+  
+    for (int i = 0; i < grid.length - 1; i ++) {
+      if (grid[i] != null){
+        grid[i].moveTile(shiftV);
+        if(grid[i].resetNeeded()){
+          grid[i].resetShift();
+          grid[i - 1] = grid[i];
+        }
       }
-      
-      grid[grid.length - 1].row = int(random(4));
     }
+  
+    grid[grid.length - 1].row = int(random(4));
     
     return isDead;
   }
   
+  public void checkMove(int pressed) {
+    for (int i = 0; i < grid.length; i++) {
+      if (grid[i] != null) {
+        if (grid[i].column == pressed) {
+          grid[i] = null;
+        } else {
+          isDead = true;
+        }
+        break;
+      }
+    }
+  }
 }
