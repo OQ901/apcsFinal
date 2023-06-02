@@ -66,8 +66,8 @@ void draw() {
     text("Piano Tiles X", 140, 460, 280, 60);
 
   } else{
+    Menu.displayMenus();
     
-    level.levelSetup();
 
     // Alive
     if (gameRun & !isDead) {
@@ -80,3 +80,8 @@ void draw() {
     }
 
 } // end draw()
+
+void mousePressed(){
+  level.levelSetup();
+  
+}

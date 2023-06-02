@@ -1,13 +1,21 @@
 public class Menu{
   PImage button;
-  String[] myMenus ={"Level 1","Level 2","Level 3","Level 4","Level 5","Freemode"};
-  int nMenus=myMenus.length;
-  int cursPos=0;
-  int button_width=150;
-  int button_height=50;
+  String[] buttonList;
+  int nMenus;
+  int cursPos;
+  int buttonWidth;
+  int buttonHeight;
   
   int[] button_x1,button_y1,button_x2,button_y2;
   
+  public Menu(String[] buttonList, int cursPos, int buttonWidth, int buttonHeight){
+    this.buttonList = buttonList;
+    nMenus = buttonList.length;
+    this.cursPos=cursPos;
+    this.buttonWidth=buttonWidth;
+    this.buttonHeight=buttonHeight
+    
+  }
   
   public void menuSetup(){
     button_x1 = new int[nMenus];
