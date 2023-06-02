@@ -12,10 +12,7 @@ public class Grid{
     
     // Fill grid with random tiles (0-3)
     grid = new Tile[FREQTILES];
-    grid[0] = null;
-    for (int i = 1; i < grid.length; i ++) {
-      grid[i] = new Tile(int(random(4)), i);
-    }
+    grid[grid.length - 1] = new Tile(int(random(4)), grid.length - 1);
     
   }
   
