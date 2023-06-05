@@ -2,6 +2,7 @@
 boolean started;
 boolean gameRun;
 boolean isDead;
+MainMenu startMenu;
 Level level;
 
 // Images
@@ -12,10 +13,8 @@ PImage logo;
 void setup() {
 
   size(480, 720); // 4 * 5 -- 120 pxl * 144 pxl tiles
-
   logo = loadImage("img/logo.jpg");
-
-  // Set custom shifting variables
+  startMenu = new MainMenu();
   newStart();
 
 }
@@ -27,7 +26,6 @@ void newStart() {
   // (Re)Set player status
   gameRun = false;
   isDead = false;
-  level = new Level(1); // STUB
   
 } // end newStart()
 
@@ -42,9 +40,6 @@ void keyPressed() {
 
   if (key == ' ' && !started) {
     started = true;
-  } else
-  if (started && !gameRun) {
-    gameRun = true;
   }
 
   // Restart
@@ -65,10 +60,14 @@ void draw() {
     textSize(40);
     text("Piano Tiles X", 140, 460, 280, 60);
 
-  } else{
-    Menu.displayMenus();
+  } else if (!gameRun){
+    background(255, 255, 255);
+    startMenu.display();
     
-
+  } else{
+    
+    level.levelSetup();
+    
     // Alive
     if (gameRun & !isDead) {
       isDead = level.scroll();
@@ -82,6 +81,14 @@ void draw() {
 } // end draw()
 
 void mousePressed(){
-  level.levelSetup();
-  
+  if (!started){
+    started = true;
+  } else
+    if (!gameRun){
+      level = startMenu.chooseLevel(mouseX, mouseY);
+      gameRun = true;
+    }
+    if (isDead){
+      newStart();
+    }
 }

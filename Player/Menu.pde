@@ -2,60 +2,51 @@ public class Menu{
   PImage button;
   String[] buttonList;
   int nMenus;
-  int cursPos;
   int buttonWidth;
   int buttonHeight;
+  int button_x1;
+  int button_x2;
   
-  int[] button_x1,button_y1,button_x2,button_y2;
+  int[] button_y1, button_y2;
+  // Main Menu firstY = 100, firstX = 30
   
-  public Menu(String[] buttonList, int cursPos, int buttonWidth, int buttonHeight){
+  public Menu(String[] buttonList, int buttonWidth, int buttonHeight, int firstX, int firstY){
     this.buttonList = buttonList;
     nMenus = buttonList.length;
-    this.cursPos=cursPos;
-    this.buttonWidth=buttonWidth;
-    this.buttonHeight=buttonHeight
+    this.buttonWidth = buttonWidth;
+    this.buttonHeight = buttonHeight;
+    button_x1 = firstX;
     
-  }
-  
-  public void menuSetup(){
-    button_x1 = new int[nMenus];
     button_y1 = new int[nMenus];
-    button_x2 = new int[nMenus];
     button_y2 = new int[nMenus];
     
-    int y1 = 0;
-    int padding = 20;
-    textSize(50);
-    fill(0);
-    text("Main Menu", 50, 50);
+    button_x2 = button_x1 + buttonWidth;
+    
     for(int i = 0; i < nMenus; i++){
-      button_x1[i] = 30;
-      button_y1[i] = 100+y1;
-      button_x2[i] = button_x1[i] + button_width;
-      button_y2[i] = button_y1[i] + button_height;
-      y1 += button_height + padding;
+      button_y1[i] = firstY + 60 * i;
+      button_y2[i] = button_y1[i] + buttonHeight;
     }
   }
   
-  public void buttonPress(){
-    for(int i=0;i<nMenus;i++){
-      if(mouseX>button_x1[i]&& mouseX <button_x2[i]&&
-      mouseY>button_y1[i]&&mouseY<button_y2[i]){
+  public int buttonPress(int mouseXCoor, int mouseYCoor){
+    int cursPos = -1;
+    for(int i = 0; i < nMenus; i++){
+      if(mouseXCoor > button_x1 && mouseXCoor < button_x2 && mouseYCoor > button_y1[i] && mouseYCoor < button_y2[i]){
         cursPos=i;
-        System.out.println("level pressed: " + i);//temp
+        break;
       }
     }
+    return cursPos;
   }
   
-  public void displayMenus(){
-    menuSetup();
+  public void displayMenu(){
     fill(255);
     textSize(35);
     for(int i = 0; i < nMenus; i++){
-     button = loadImage("img/button.jpg");
-     image(button, button_x1[i], button_y1[i]);
-     int y1 = (button_width- (int)textWidth(myMenus[i])) / 2 + 7;
-     text(myMenus[i], button_x1[1] + 30, button_y1[i] + y1);
+      button = loadImage("img/button.png");
+      image(button, button_x1, button_y1[i]);
+      int y1 = (buttonWidth- (int)textWidth(buttonList[i])) / 2 + 7;
+      text(buttonList[i], button_x1 + 30, button_y1[i] + y1);
     }
   }
 }
