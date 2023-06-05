@@ -1,10 +1,18 @@
 public class Menu{
-public Menu(String[] buttonList, int cursPos, int buttonWidth, int buttonHeight){
+
+  String[] buttonList;
+  int cursPos;
+  int buttonWidth;
+  int buttonHeight;
+  int nMenus;
+  
+  
+  public Menu(String[] buttonList, int cursPos, int buttonWidth, int buttonHeight){
     this.buttonList = buttonList;
     nMenus = buttonList.length;
     this.cursPos=cursPos;
     this.buttonWidth=buttonWidth;
-    this.buttonHeight=buttonHeight
+    this.buttonHeight=buttonHeight;
     
   }
   
