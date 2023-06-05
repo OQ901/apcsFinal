@@ -1,5 +1,5 @@
 public class Level extends Grid{
-  PImage background = loadImage("img/bg/pastelBack.jpg"); // STUB
+  PImage background = loadImage("img/bg/pastelPolyBack.png"); // STUB
   int speed; //STUB
   
   public Level(int levelNum){

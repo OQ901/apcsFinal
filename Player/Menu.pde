@@ -8,7 +8,7 @@ public class Menu{
   int button_x2;
   
   int[] button_y1, button_y2;
-  // Main Menu firstY = 100, firstX = 30
+
   
   public Menu(String[] buttonList, int buttonWidth, int buttonHeight, int firstX, int firstY){
     this.buttonList = buttonList;
@@ -48,5 +48,6 @@ public class Menu{
       int y1 = (buttonWidth- (int)textWidth(buttonList[i])) / 2 + 7;
       text(buttonList[i], button_x1 + 30, button_y1[i] + y1);
     }
+
   }
 }
