@@ -2,8 +2,6 @@ public class Level extends Grid{
   PImage background;
   int speed; //STUB
   int levelNum;
-  int score;
-  int hiscore;
   
   public Level(int levelNum){
     // STUB
@@ -24,11 +22,4 @@ public class Level extends Grid{
     fillGrid();
   }
   
-  public boolean checkMove(int pressed){
-    boolean validMove = super.checkMove(pressed);
-    if (validMove){
-      score += levelNum + 1;
-    }
-    return validMove;
-  }
 }
