@@ -1,10 +1,17 @@
 public class Level extends Grid{
-  PImage background = loadImage("img/bg/pastelPolyBack.png"); // STUB
+  PImage background;
   int speed; //STUB
+  int levelNum;
+  int score;
+  int hiscore;
   
   public Level(int levelNum){
     // STUB
     super(5);
+    this.levelNum = levelNum;
+    background = loadImage("img/bg/" + levelNum + ".png");
+    score = 0;
+    hiscore = 0;
   }
   
   public void levelSetup(){
@@ -15,21 +22,13 @@ public class Level extends Grid{
     line(Tile.TX * 2, 0, Tile.TX * 2, height);
     line(Tile.TX * 3, 0, Tile.TX * 3, height);
     fillGrid();
-    
   }
   
-  public void deathScreen(){
-    // End Screen
-    fill(255, 255, 255);
-    rect(60, 180, 360, 45);
-    rect(60, 240, 360, 75);
-    fill(100);
-    textSize(30);
-    String s = "You suck!";
-    text(s, 180, 185, 350, 240);
-    s = "Score: TBD";
-    text(s, 90, 245, 350, 240);
-    s = "High Score: TBD";
-    text(s, 90, 275, 350, 240);
+  public boolean checkMove(int pressed){
+    boolean validMove = super.checkMove(pressed);
+    if (validMove){
+      score += levelNum + 1;
+    }
+    return validMove;
   }
 }

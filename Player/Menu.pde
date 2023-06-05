@@ -10,12 +10,13 @@ public class Menu{
   int[] button_y1, button_y2;
 
   
-  public Menu(String[] buttonList, int buttonWidth, int buttonHeight, int firstX, int firstY){
+  public Menu(String[] buttonList, int buttonWidth, int buttonHeight, int firstX, int firstY, int padding){
     this.buttonList = buttonList;
     nMenus = buttonList.length;
     this.buttonWidth = buttonWidth;
     this.buttonHeight = buttonHeight;
     button_x1 = firstX;
+    button = loadImage("img/button.png");
     
     button_y1 = new int[nMenus];
     button_y2 = new int[nMenus];
@@ -23,7 +24,7 @@ public class Menu{
     button_x2 = button_x1 + buttonWidth;
     
     for(int i = 0; i < nMenus; i++){
-      button_y1[i] = firstY + 60 * i;
+      button_y1[i] = firstY + padding * i;
       button_y2[i] = button_y1[i] + buttonHeight;
     }
   }
@@ -41,12 +42,11 @@ public class Menu{
   
   public void displayMenu(){
     fill(255);
-    textSize(35);
+    textSize(40);
     for(int i = 0; i < nMenus; i++){
-      button = loadImage("img/button.png");
-      image(button, button_x1, button_y1[i]);
-      int y1 = (buttonWidth- (int)textWidth(buttonList[i])) / 2 + 7;
-      text(buttonList[i], button_x1 + 30, button_y1[i] + y1);
+      image(button, button_x1, button_y1[i], buttonWidth, buttonHeight);
+      textAlign(CENTER);
+      text(buttonList[i], (button_x1 + button_x2) / 2, (button_y1[i] + button_y2[i] + 25) / 2);
     }
 
   }

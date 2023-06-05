@@ -2,8 +2,13 @@
 boolean started;
 boolean gameRun;
 boolean isDead;
+
 MainMenu startMenu;
+DeathMenu deathMenu;
 Level level;
+
+int score;
+int hiscore;
 
 // Images
 PImage logo;
@@ -13,10 +18,10 @@ PImage logo;
 void setup() {
 
   size(480, 720); // 4 * 5 -- 120 pxl * 144 pxl tiles
-  logo = loadImage("img/logo.jpg");
+  logo = loadImage("img/logo.png");
   startMenu = new MainMenu();
+  hiscore = 0;
   newStart();
-
 }
 
 
@@ -26,25 +31,28 @@ void newStart() {
   // (Re)Set player status
   gameRun = false;
   isDead = false;
+  score = 0;
   
 } // end newStart()
 
 
 void keyPressed() {
 
-  if ("1234".contains(String.valueOf(key))) {
+  if (gameRun && "1234".contains(String.valueOf(key))) {
     isDead = !level.checkMove(Character.getNumericValue(key) - 1);
+    if (!isDead){
+      if (level.levelNum < 5){
+        score += level.levelNum + 1;
+      } else score++;
+    } else if (score > hiscore){
+      hiscore = score;
+    }
   }
 
   // Start
 
   if (key == ' ' && !started) {
     started = true;
-  }
-
-  // Restart
-  if (key == ' ' && isDead) {
-    newStart();
   }
 
 } // end keyPressed()
@@ -75,7 +83,8 @@ void draw() {
   }
   
   if (isDead) {
-      level.deathScreen();
+      deathMenu = new DeathMenu();
+      deathMenu.display(score, hiscore);
     }
 
 } // end draw()
@@ -86,9 +95,16 @@ void mousePressed(){
   } else
     if (!gameRun){
       level = startMenu.chooseLevel(mouseX, mouseY);
-      gameRun = true;
+      if (level != null)
+        gameRun = true;
     }
     if (isDead){
-      newStart();
+      if(deathMenu.goAgain(mouseX, mouseY) != null){
+        if (deathMenu.goAgain(mouseX, mouseY)){
+          level = new Level(level.levelNum);
+          isDead = false;
+        }
+        else newStart();
+      }
     }
 }
