@@ -6,6 +6,7 @@ boolean isDead;
 MainMenu startMenu;
 DeathMenu deathMenu;
 Level level;
+Music lvlMusic;
 
 int score;
 int hiscore;
@@ -13,11 +14,14 @@ int hiscore;
 // Images
 PImage logo;
 
+// Sounds
+SoundFile music;
 
 // One-time Setup
 void setup() {
   size(480, 720); // 4 * 5 -- 120 pxl * 144 pxl tiles
   logo = loadImage("img/logo.png");
+  
   startMenu = new MainMenu();
   hiscore = 0;
   newStart();
@@ -94,6 +98,7 @@ void mousePressed(){
   } else
     if (!gameRun){
       level = startMenu.chooseLevel(mouseX, mouseY);
+      chooseMuse();
       if (level != null)
         gameRun = true;
     }
@@ -107,3 +112,8 @@ void mousePressed(){
       }
     }
 }
+
+ void chooseMuse(){
+   music = new SoundFile(this, "lvl/" + level + ".wav");
+   
+ }

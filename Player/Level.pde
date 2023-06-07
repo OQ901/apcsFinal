@@ -8,6 +8,7 @@ public class Level extends Grid{
     super(5);
     this.levelNum = levelNum;
     background = loadImage("img/bg/" + levelNum + ".png");
+    
     score = 0;
     hiscore = 0;
   }
