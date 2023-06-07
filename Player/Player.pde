@@ -16,7 +16,6 @@ PImage logo;
 
 // One-time Setup
 void setup() {
-
   size(480, 720); // 4 * 5 -- 120 pxl * 144 pxl tiles
   logo = loadImage("img/logo.png");
   startMenu = new MainMenu();
@@ -38,7 +37,7 @@ void newStart() {
 
 void keyPressed() {
 
-  if (gameRun && "1234".contains(String.valueOf(key))) {
+  if (gameRun && !isDead && "1234".contains(String.valueOf(key))) {
     isDead = !level.checkMove(Character.getNumericValue(key) - 1);
     if (!isDead){
       if (level.levelNum < 5){
