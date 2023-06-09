@@ -1,6 +1,6 @@
 public class DeathMenu extends Menu{
-  public DeathMenu(){
-    super(new String[]{"Try Again", "Main Menu"}, 300, 75, (width - 300) / 2, 500, 85);
+  public DeathMenu(String button1){
+    super(new String[]{button1, "Main Menu"}, 300, 75, (width - 300) / 2, 500, 85);
   }
   
   public void display(int score, int hiscore){    

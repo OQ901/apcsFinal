@@ -1,16 +1,23 @@
 public class Level extends Grid{
+  final float[] speeds = {4, 5, 7, 8, 10, 5};
   PImage background;
   int speed; //STUB
   int levelNum;
+  Music levelMusic;
+  int tilesLeft;
   
   public Level(int levelNum){
-    // STUB
-    super(5);
     this.levelNum = levelNum;
-    background = loadImage("img/bg/" + levelNum + ".png");
+    background = loadImage("data/img/bg/" + levelNum + ".png");
     
-    score = 0;
-    hiscore = 0;
+    levelMusic = new Music(levelNum);
+    if (levelNum < 5)
+      tilesLeft = levelMusic.notes.size();
+    else { 
+      tilesLeft = Integer.MAX_VALUE;
+      levelMusic.play();
+    }
+    shiftV = speeds[levelNum];
   }
   
   public void levelSetup(){
@@ -23,4 +30,28 @@ public class Level extends Grid{
     fillGrid();
   }
   
+  public boolean playTile(int pressed){
+    boolean validMove = checkMove(pressed);
+    if (validMove){
+      if(levelNum < 5){
+        levelMusic.playNote();
+        tilesLeft--;
+      }
+    }
+    return validMove;
+  }
+  
+  public boolean scroll(){
+    if (grid[grid.length - 1] == null && tilesLeft > tilesPresent()){
+      grid[grid.length - 1] = new Tile(int(random(4)), grid.length - 1);
+    }
+    if (levelNum == 5){
+      shiftV = 5 + 0.1 * score;
+    }
+    return super.scroll();
+  }
+  
+  public boolean levelBeat(){
+    return tilesLeft == 0;
+  }
 }

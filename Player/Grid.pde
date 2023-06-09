@@ -4,11 +4,10 @@ public class Grid{
   Tile[] grid;
     
   // Shifting
-  int shiftV;
+  float shiftV;
 
-  public Grid(int shiftV){
+  public Grid(){
     // (Re)Set board shifts
-    this.shiftV = shiftV;
     
     // Fill grid with random tiles (0-3)
     grid = new Tile[FREQTILES];
@@ -42,10 +41,6 @@ public class Grid{
       }
     }
     
-    if (grid[grid.length - 1] == null){
-      grid[grid.length - 1] = new Tile(int(random(4)), grid.length - 1);
-    }
-    
     return isDead;
   }
   
@@ -61,5 +56,13 @@ public class Grid{
       }
     }
     return validMove;
+  }
+  
+  public int tilesPresent(){
+    int tiles = 0;
+    for (int x = 0; x < grid.length; x++){
+      if (grid[x] != null) tiles++;
+    }
+    return tiles;
   }
 }

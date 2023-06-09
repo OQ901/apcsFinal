@@ -1,8 +1,8 @@
 public class Tile{
   final static int TX = 120; // tile width
   final static int TY = 144; // tile height
-  int xPos, yPos, row, column;
-  int travelDist;
+  float xPos, yPos, row, column;
+  float travelDist;
   
   public Tile(int ranColumn, int row){
   this.row = row;
@@ -17,7 +17,7 @@ public class Tile{
     rect(xPos, yPos, Tile.TX, Tile.TY);
   }
   
-  public void moveTile(int shiftY){
+  public void moveTile(float shiftY){
     yPos += shiftY;
     travelDist += shiftY;
   }

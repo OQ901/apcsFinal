@@ -1,5 +1,6 @@
 public class Menu{
   PImage button;
+  Music bgMusic;
   String[] buttonList;
   int nMenus;
   int buttonWidth;
@@ -8,7 +9,6 @@ public class Menu{
   int button_x2;
   
   int[] button_y1, button_y2;
-
   
   public Menu(String[] buttonList, int buttonWidth, int buttonHeight, int firstX, int firstY, int padding){
     this.buttonList = buttonList;
@@ -16,7 +16,7 @@ public class Menu{
     this.buttonWidth = buttonWidth;
     this.buttonHeight = buttonHeight;
     button_x1 = firstX;
-    button = loadImage("img/button.png");
+    button = loadImage("data/img/button.png");
     
     button_y1 = new int[nMenus];
     button_y2 = new int[nMenus];
@@ -27,6 +27,8 @@ public class Menu{
       button_y1[i] = firstY + padding * i;
       button_y2[i] = button_y1[i] + buttonHeight;
     }
+    
+    bgMusic = new Music(-1);
   }
   
   public int buttonPress(int mouseXCoor, int mouseYCoor){
@@ -48,6 +50,11 @@ public class Menu{
       textAlign(CENTER);
       text(buttonList[i], (button_x1 + button_x2) / 2, (button_y1[i] + button_y2[i] + 25) / 2);
     }
-
+  }
+  
+  public void startStopBG(){
+    if (bgMusic.isPlaying()){
+      bgMusic.stop();
+    } else bgMusic.loop();
   }
 }

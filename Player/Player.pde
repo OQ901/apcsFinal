@@ -6,7 +6,6 @@ boolean isDead;
 MainMenu startMenu;
 DeathMenu deathMenu;
 Level level;
-Music lvlMusic;
 
 int score;
 int hiscore;
@@ -14,15 +13,11 @@ int hiscore;
 // Images
 PImage logo;
 
-// Sounds
-SoundFile music;
-
 // One-time Setup
 void setup() {
   size(480, 720); // 4 * 5 -- 120 pxl * 144 pxl tiles
-  logo = loadImage("img/logo.png");
+  logo = loadImage("data/img/logo.png");
   
-  startMenu = new MainMenu();
   hiscore = 0;
   newStart();
 }
@@ -35,20 +30,27 @@ void newStart() {
   gameRun = false;
   isDead = false;
   score = 0;
+  startMenu = new MainMenu();
+  level = null;
   
 } // end newStart()
 
+void showScore() {
+  
+  textSize(40);
+  fill(255, 0, 0);
+  textAlign(CENTER);
+  text(score, 240, 50);
+}
 
 void keyPressed() {
 
   if (gameRun && !isDead && "1234".contains(String.valueOf(key))) {
-    isDead = !level.checkMove(Character.getNumericValue(key) - 1);
+    isDead = !level.playTile(Character.getNumericValue(key) - 1);
     if (!isDead){
       if (level.levelNum < 5){
         score += level.levelNum + 1;
       } else score++;
-    } else if (score > hiscore){
-      hiscore = score;
     }
   }
 
@@ -73,22 +75,51 @@ void draw() {
 
   } else if (!gameRun){
     background(255, 255, 255);
+    if (!startMenu.bgMusic.isPlaying())
+      startMenu.startStopBG();
     startMenu.display();
     
   } else{
     
     level.levelSetup();
     
+    if (startMenu != null){
+      startMenu.startStopBG();
+      startMenu = null;
+    }
+    
     // Alive
-    if (gameRun & !isDead) {
+    if (gameRun && !isDead && !level.levelBeat()) {
       isDead = level.scroll();
+      showScore();
     }
   }
   
   if (isDead) {
-      deathMenu = new DeathMenu();
+      if (score > hiscore){
+        hiscore = score;
+      }
+      if (deathMenu == null){
+        deathMenu = new DeathMenu("Try Again");
+        deathMenu.startStopBG();
+      }
       deathMenu.display(score, hiscore);
+      
+      if (level.levelNum == 5)
+        level.levelMusic.stop();
     }
+    
+  if(level != null && level.levelBeat()){
+    if (score > hiscore){
+        hiscore = score;
+    }
+    
+    if(deathMenu == null){
+      deathMenu = new WinMenu();
+      deathMenu.startStopBG();
+    }
+    deathMenu.display(score, hiscore);
+  }
 
 } // end draw()
 
@@ -98,22 +129,24 @@ void mousePressed(){
   } else
     if (!gameRun){
       level = startMenu.chooseLevel(mouseX, mouseY);
-      chooseMuse();
       if (level != null)
         gameRun = true;
-    }
-    if (isDead){
+    } else
+    if (isDead || level.levelBeat()){
       if(deathMenu.goAgain(mouseX, mouseY) != null){
         if (deathMenu.goAgain(mouseX, mouseY)){
-          level = new Level(level.levelNum);
+          if (isDead)
+            level = new Level(level.levelNum);
+          else
+            level = new Level(level.levelNum + 1);
+          score = 0;
           isDead = false;
         }
-        else newStart();
+        else{
+          newStart();
+        }
+        deathMenu.startStopBG();
+        deathMenu = null;
       }
     }
 }
-
- void chooseMuse(){
-   music = new SoundFile(this, "lvl/" + level + ".wav");
-   
- }

@@ -5,8 +5,8 @@ public class MainMenu extends Menu{
   public MainMenu(){
     super(new String[]{"Level 1","Level 2","Level 3","Level 4","Level 5","Freemode"},
           300, 60, (width - 300) / 2, 250, 70);
-    background = loadImage("img/bg/MMBG.jpg");
-    logo = loadImage("img/logo.png");
+    background = loadImage("data/img/bg/MMBG.jpg");
+    logo = loadImage("data/img/logo.png");
   }
   
   public void display(){
